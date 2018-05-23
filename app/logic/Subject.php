@@ -201,7 +201,7 @@ class Subject extends Base
      */
     public function lists($where, $now_page, $rows)
     {
-        $page = service\Article::lists($where, $now_page, $rows);
+        $page = service\Subject::lists($where, $now_page, $rows);
         return $page;
     }
 
@@ -222,7 +222,7 @@ class Subject extends Base
             'name' => ServerAction::class,
             'data' => [
                 'id' => $data['content'],
-                'type' => 'cms',
+                'type' => 'subject',
                 'user_id' => $user_id
             ],
             'server_action' => 'article@/server/validation'
@@ -230,24 +230,24 @@ class Subject extends Base
         if (!$validation->validate($data)) {
             return $validation->getMessages();
         }
-        $tm = $this->transactionManager->get();
+        $tm233 = $this->transactionManager->get();
         //验证通过 进行插入
-        $ArticleModel = new \app\model\article();
+        $ArticleModel = new \app\model\subject();
         if (!$ArticleModel->save($data)) {
-            $tm->rollback();
+            $tm233->rollback();
             return $ArticleModel->getMessages();
         }
         # 进行关联更新
         $re = $this->proxyCS->request_return('article', '/server/correlation', [
             'id' => $data['content'],
-            'type' => 'cms',
+            'type' => 'subject',
             'user_id' => $user_id
         ]);
         if (is_array($re) && $re['e']) {
-            $tm->rollback();
+            $tm233->rollback();
             return false;
         }
-        $tm->commit();
+        $tm233->commit();
         return true;
     }
 

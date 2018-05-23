@@ -7,6 +7,7 @@ use app\filterTool\CateFilter;
 use app\model\forum;
 use app\validation\CateAdd;
 use app\validation\CateEdit;
+use app\validation\ForumsDel;
 
 class Forums extends Base
 {
@@ -127,7 +128,12 @@ class Forums extends Base
      */
     public function dele($id)
     {
-        $article_category = forum::findFirst([
+        # 验证数据
+        $validation = new ForumsDel();
+        if (!$validation->validate(['id' => $id])) {
+            return $validation->getMessages();
+        }
+        $forum = forum::findFirst([
             'id = :id:', 'bind' => [
                 'id' => $id
             ]

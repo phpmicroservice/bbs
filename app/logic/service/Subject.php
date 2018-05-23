@@ -5,7 +5,7 @@ namespace app\logic\service;
 use app\Base;
 use app\logic\Cate;
 
-class Article extends Base
+class Subject extends Base
 {
 
     public static function ids2list($id_list)
@@ -24,7 +24,7 @@ class Article extends Base
     {
         $modelsManager = \Phalcon\Di::getDefault()->get('modelsManager');
         $builder = $modelsManager->createBuilder()
-            ->from(\app\model\article::class)
+            ->from(\app\model\subject::class)
             ->orderBy("id");
         $builder = self::call_where($builder, $where);
         $paginator = new \pms\Paginator\Adapter\QueryBuilder(

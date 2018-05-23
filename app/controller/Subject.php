@@ -6,7 +6,7 @@ use app\Controller;
 
 /**
  * 主题控制器,
- * Class Subject
+ * Class Subject subject
  * @package app\controller
  */
 class Subject extends Controller
@@ -15,9 +15,7 @@ class Subject extends Controller
     public function index()
     {
         $where = [
-            'user_id' => $this->getData('pid', 0),
-            'cate_id' => $this->getData('cate_id', 0),
-            'type_n' => $this->getData('type_n'),
+            'forum_id' => $this->getData('forum_id', 0),
             'search_key' => $this->getData('search_key'),
         ];
         $page = $this->getData('p', 1);

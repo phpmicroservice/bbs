@@ -2,7 +2,7 @@
 
 namespace app\validation;
 
-use app\model\article;
+use app\model\subject;
 use pms\Validation;
 
 /**
@@ -58,7 +58,7 @@ class ArticleAdd extends Validation
     protected function initialize()
     {
         $this->add_uq('content', [
-            'model' => new article(),
+            'model' => new subject(),
             'message' => 'uq'
         ]);
         return parent::initialize();
