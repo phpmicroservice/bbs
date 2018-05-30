@@ -232,8 +232,8 @@ class Subject extends Base
         }
         $tm233 = $this->transactionManager->get();
         //验证通过 进行插入
-        $tm233->begin();
         $ArticleModel = new \app\model\subject();
+        $ArticleModel->setTransaction($tm233);
         if (!$ArticleModel->save($data)) {
             $tm233->rollback();
             return $ArticleModel->getMessage();
@@ -248,7 +248,8 @@ class Subject extends Base
             $tm233->rollback();
             return false;
         }
-        $tm233->commit();
+       $re251 = $tm233->commit();
+        output($re251);
         return true;
     }
 

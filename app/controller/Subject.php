@@ -31,6 +31,7 @@ class Subject extends Controller
      */
     public function add()
     {
+
         $data = $this->getData();
         $server = new \app\logic\Subject();
         $re = $server->add($this->user_id, $data);
