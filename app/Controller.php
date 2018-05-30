@@ -2,7 +2,6 @@
 
 namespace app;
 
-use pms\Validation\Message\Group;
 
 
 /**
@@ -26,9 +25,7 @@ class Controller extends \pms\Controller
     public function initialize()
     {
         $this->user_id = $this->session->user_id;
-        $this->di->setShared('message', function () {
-            return new Group();
-        });
+
         $this->message->pruge();
         parent::initialize();
     }

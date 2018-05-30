@@ -146,6 +146,7 @@ $di->set(
 
 $di->set(
     "proxyCS", function () {
+        output('proxyCS','proxyCS');
     $client = new \pms\bear\ClientSync(get_env('PROXY_HOST'), get_env('PROXY_PROT'), 10);
     return $client;
 
@@ -178,6 +179,9 @@ $di["db"] = function () use ($di) {
     );
 };
 
+$di["message"]= function () {
+    return new \pms\Validation\Message\Group();
+};
 
 
 

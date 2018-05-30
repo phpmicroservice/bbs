@@ -232,10 +232,11 @@ class Subject extends Base
         }
         $tm233 = $this->transactionManager->get();
         //验证通过 进行插入
+        $tm233->begin();
         $ArticleModel = new \app\model\subject();
         if (!$ArticleModel->save($data)) {
             $tm233->rollback();
-            return $ArticleModel->getMessages();
+            return $ArticleModel->getMessage();
         }
         # 进行关联更新
         $re = $this->proxyCS->request_return('article', '/server/correlation', [

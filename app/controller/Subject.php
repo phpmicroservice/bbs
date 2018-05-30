@@ -25,6 +25,7 @@ class Subject extends Controller
         $this->send($re);
     }
 
+
     /**
      * 增加
      */
@@ -33,6 +34,7 @@ class Subject extends Controller
         $data = $this->getData();
         $server = new \app\logic\Subject();
         $re = $server->add($this->user_id, $data);
+        output($re,'send');
         $this->send($re);
     }
 

@@ -10,7 +10,7 @@ class ArticleAdd extends FilterTool
     protected function initialize()
     {
         $this->_Rules[] = ['title', 'string'];
-        $this->_Rules[] = ['froum_id', 'int'];
+        $this->_Rules[] = ['forum_id', 'int'];
         $this->_Rules[] = ['description', 'string'];
         $this->_Rules[] = ['content', 'int'];
         $this->_Rules[] = ['view', 'int'];
