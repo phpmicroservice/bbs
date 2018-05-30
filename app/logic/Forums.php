@@ -75,17 +75,17 @@ class Forums extends Base
         if (!$va->validate($data)) {
             return $va->getMessages();
         }
-        $article_category = new forum();
-        $article_category->setData($data);
+        $subject_category = new forum();
+        $subject_category->setData($data);
         try {
-            if (!$article_category->save()) {
-                return $article_category->getMessage();
+            if (!$subject_category->save()) {
+                return $subject_category->getMessage();
             }
         } catch (\PDOException $exception) {
             return $exception->getMessage();
         }
 
-        return (int)$article_category->id;
+        return (int)$subject_category->id;
     }
 
     /**
@@ -105,19 +105,19 @@ class Forums extends Base
             return $va->getMessages();
         }
         # 验证完成
-        $article_category = forum::findFirst([
+        $subject_category = forum::findFirst([
             'id = :id:', 'bind' => [
                 'id' => $id
             ]
         ]);
-        if ($article_category instanceof forum) {
+        if ($subject_category instanceof forum) {
             //成功的读取了数据
         } else {
             return "empty-error";
         }
-        $article_category->setData($data);
-        if ($article_category->save() === false) {
-            return $article_category->getMessage();
+        $subject_category->setData($data);
+        if ($subject_category->save() === false) {
+            return $subject_category->getMessage();
         }
         return true;
     }

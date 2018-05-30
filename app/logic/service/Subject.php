@@ -10,7 +10,7 @@ class Subject extends Base
 
     public static function ids2list($id_list)
     {
-        return \app\model\article::query()->inWhere('id', $id_list)->execute();
+        return \app\model\subject::query()->inWhere('id', $id_list)->execute();
     }
 
     /**

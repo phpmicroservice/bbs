@@ -4,6 +4,7 @@ namespace app\logic;
 
 use app\Base;
 use app\validation\ArticleAdd;
+use app\validation\ArticleEdit;
 use pms\Validation\Validator\ServerAction;
 
 class Subject extends Base
@@ -43,11 +44,11 @@ class Subject extends Base
         if (!$validation->validate($data)) {
             return $validation->getMessage();
         }
-        $articleModel = new model\article();
+        $subjectModel = new model\subject();
         $findData = [
             'conditions' => 'id = ' . $id
         ];
-        $dataBoj = $articleModel->findFirst($findData);
+        $dataBoj = $subjectModel->findFirst($findData);
         if (!$dataBoj) {
             return "不存在的数据!";
         }
@@ -55,12 +56,12 @@ class Subject extends Base
 
         # 附件处理
         if ($data['cover_id']) {
-            $data['cover_id'] = $attachmentArray->many(1, 'article_cover', $dataBoj->cover_id, $data['cover_id']);
+            $data['cover_id'] = $attachmentArray->many(1, 'subject_cover', $dataBoj->cover_id, $data['cover_id']);
         }
 
-        $data['attachment'] = $attachmentArray->many(1, 'article_attachment', $dataBoj->attachment, $data['attachment']);
+        $data['attachment'] = $attachmentArray->many(1, 'subject_attachment', $dataBoj->attachment, $data['attachment']);
 
-        Trace::add('info', $data);
+
         $dataBoj->setData($data);
         $re = $dataBoj->update();
         if ($re === false) {
@@ -70,18 +71,26 @@ class Subject extends Base
         }
     }
 
-    public function edit($data)
+    /**
+     * 编辑
+     * @param $user_id
+     * @param $data
+     * @return bool|string
+     */
+    public function edit($user_id, $data)
     {
+        $data['user_id'] = $user_id;
         # 过滤
         $filter = new \app\filterTool\ArticleEdit();
         $filter->filter($data);
         //验证
-        $validation = new Validation();
-        $validation->validate($data);
-        if ($validation->getMessage()) {
-            return $validation->getMessage();
+        $validation = new ArticleEdit();
+        if (!$validation->validate($data)) {
+            return $validation->getMessages();
         }
-        $dataBoj = \app\model\article::findFirst([
+        unset($data['user_id']);
+        # 验证完成
+        $dataBoj = \app\model\subject::findFirst([
             'id = :id:', 'bind' => [
                 'id' => $data['id']
             ]
@@ -90,7 +99,7 @@ class Subject extends Base
         if (!$dataBoj) {
             return "不存在的数据!";
         }
-        Trace::add('info', $data);
+
         $dataBoj->setData($data);
         $re = $dataBoj->update();
         if ($re === false) {
@@ -108,7 +117,7 @@ class Subject extends Base
      */
     public function del($id)
     {
-        $model = \app\model\article::findFirstById($id);
+        $model = \app\model\subject::findFirstById($id);
         if ($model === false) {
             return '_empty-info';
         }
@@ -124,7 +133,7 @@ class Subject extends Base
      */
     public function info4user($id, $user_id)
     {
-        $model = \logic\Article\model\article::findFirst([
+        $model = \logic\Article\model\subject::findFirst([
             'id = :id: and uid =:uid:',
             'bind' => [
                 'id' => $id,
@@ -145,10 +154,10 @@ class Subject extends Base
      */
     public static function call_info(array $data, $user_id)
     {
-        $praise = \logic\user\praise::info($data['id'], 'article', $user_id);
+        $praise = \logic\user\praise::info($data['id'], 'subject', $user_id);
         $data['praise'] = (int)$praise;
 
-        $collect = \logic\user\collect::is_collect($data['id'], 'article', $user_id);
+        $collect = \logic\user\collect::is_collect($data['id'], 'subject', $user_id);
         $data['collect'] = $collect;
         $data['cover_id'] = \logic\Attachment\attachmentArray::list4id($data['cover_id']);
         return $data;
@@ -160,7 +169,7 @@ class Subject extends Base
      */
     public function ago_info($id)
     {
-        $model = \logic\Article\model\article::ago_info($id);
+        $model = \logic\Article\model\subject::ago_info($id);
         if ($model === false) {
             return [];
         }
@@ -183,9 +192,9 @@ class Subject extends Base
             return $validation->getMessage();
         }
         # 验证通过 组合数据
-        Trace::add('info1', $data);
+
         $data2 = [];
-        $data2['type'] = 'article';
+        $data2['type'] = 'subject';
         $data2['content'] = $data['content'];
         $data2['title'] = $data['title'];
         $data2['correlation_id'] = $data['re_id'];
@@ -225,11 +234,12 @@ class Subject extends Base
                 'type' => 'subject',
                 'user_id' => $user_id
             ],
-            'server_action' => 'article@/server/validation'
+            'server_action' => 'subject@/server/validation'
         ]);
         if (!$validation->validate($data)) {
             return $validation->getMessages();
         }
+        $data['create_time'] = time();
         $tm233 = $this->transactionManager->get();
         //验证通过 进行插入
         $ArticleModel = new \app\model\subject();
@@ -239,7 +249,7 @@ class Subject extends Base
             return $ArticleModel->getMessage();
         }
         # 进行关联更新
-        $re = $this->proxyCS->request_return('article', '/server/correlation', [
+        $re = $this->proxyCS->request_return('subject', '/server/correlation', [
             'id' => $data['content'],
             'type' => 'subject',
             'user_id' => $user_id
@@ -263,13 +273,13 @@ class Subject extends Base
         if (is_string($info)) {
             return $info;
         }
-        if ($this->session->get('article_viewadd1' . $id)) {
+        if ($this->session->get('subject_viewadd1' . $id)) {
             return true;
         }
 
         $info->viewed = $info->viewed + 1;
         if ($info->save() === false) {
-            $this->session->get('article_viewadd1' . $id, 1);
+            $this->session->get('subject_viewadd1' . $id, 1);
             return $info->getMessage();
         }
         return true;
@@ -281,7 +291,7 @@ class Subject extends Base
      */
     public function info($user_id, $id)
     {
-        $model = \app\model\article::findFirstById($id);
+        $model = \app\model\subject::findFirstById($id);
         if ($model === false) {
             return '_empty-info';
         }

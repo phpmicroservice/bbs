@@ -25,18 +25,18 @@ class subject extends Model
      */
     public static function edit_admin($id, $data)
     {
-        Trace::add('info', func_get_args());
+
         //验证
         $validation = new Validation();
         $validation->validate($data);
         if ($validation->getMessage()) {
             return $validation->getMessage();
         }
-        $articleModel = new model\article();
+        $subjectModel = new model\subject();
         $findData = [
             'conditions' => 'id = ' . $id
         ];
-        $dataBoj = $articleModel->findFirst($findData);
+        $dataBoj = $subjectModel->findFirst($findData);
         if (!$dataBoj) {
             return "不存在的数据!";
         }
@@ -44,12 +44,12 @@ class subject extends Model
 
         # 附件处理
         if ($data['cover_id']) {
-            $data['cover_id'] = $attachmentArray->many(1, 'article_cover', $dataBoj->cover_id, $data['cover_id']);
+            $data['cover_id'] = $attachmentArray->many(1, 'subject_cover', $dataBoj->cover_id, $data['cover_id']);
         }
 
-        $data['attachment'] = $attachmentArray->many(1, 'article_attachment', $dataBoj->attachment, $data['attachment']);
+        $data['attachment'] = $attachmentArray->many(1, 'subject_attachment', $dataBoj->attachment, $data['attachment']);
 
-        Trace::add('info', $data);
+
         $dataBoj->setData($data);
         $re = $dataBoj->update();
         if ($re === false) {
@@ -90,7 +90,7 @@ class subject extends Model
      */
     public function info4user($id, $user_id)
     {
-        $model = \logic\Article\model\article::findFirst([
+        $model = \logic\Article\model\subject::findFirst([
             'id = :id: and uid =:uid:',
             'bind' => [
                 'id' => $id,
@@ -111,10 +111,10 @@ class subject extends Model
      */
     public static function call_info(array $data, $user_id)
     {
-        $praise = \logic\user\praise::info($data['id'], 'article', $user_id);
+        $praise = \logic\user\praise::info($data['id'], 'subject', $user_id);
         $data['praise'] = (int)$praise;
 
-        $collect = \logic\user\collect::is_collect($data['id'], 'article', $user_id);
+        $collect = \logic\user\collect::is_collect($data['id'], 'subject', $user_id);
         $data['collect'] = $collect;
         $data['cover_id'] = \logic\Attachment\attachmentArray::list4id($data['cover_id']);
         return $data;
@@ -126,7 +126,7 @@ class subject extends Model
      */
     public function ago_info($id)
     {
-        $model = \logic\Article\model\article::ago_info($id);
+        $model = \logic\Article\model\subject::ago_info($id);
         if ($model === false) {
             return [];
         }
@@ -149,9 +149,9 @@ class subject extends Model
             return $validation->getMessage();
         }
         # 验证通过 组合数据
-        Trace::add('info1', $data);
+
         $data2 = [];
-        $data2['type'] = 'article';
+        $data2['type'] = 'subject';
         $data2['content'] = $data['content'];
         $data2['title'] = $data['title'];
         $data2['correlation_id'] = $data['re_id'];
@@ -173,14 +173,14 @@ class subject extends Model
             return $validation->getMessage();
         }
         //验证通过 进行插入
-        $ArticleModel = new model\article();
+        $ArticleModel = new model\subject();
         $this->transactionManager->get();
         $attachmentArray = new \logic\Attachment\attachmentArray();
         if ($data['cover_id']) {
-            $data['cover_id'] = $attachmentArray->many(1, 'article_cover', 0, $data['cover_id']);
+            $data['cover_id'] = $attachmentArray->many(1, 'subject_cover', 0, $data['cover_id']);
         }
 
-        $data['attachment'] = $attachmentArray->many(1, 'article_attachment', 0, $data['attachment']);
+        $data['attachment'] = $attachmentArray->many(1, 'subject_attachment', 0, $data['attachment']);
         $re = $ArticleModel->save($data);
         if ($re === false) {
             $this->transactionManager->rollback();
@@ -201,13 +201,13 @@ class subject extends Model
         if (is_string($info)) {
             return $info;
         }
-        if ($this->session->get('article_viewadd1' . $id)) {
+        if ($this->session->get('subject_viewadd1' . $id)) {
             return true;
         }
 
         $info->viewed = $info->viewed + 1;
         if ($info->save() === false) {
-            $this->session->get('article_viewadd1' . $id, 1);
+            $this->session->get('subject_viewadd1' . $id, 1);
             return $info->getMessage();
         }
         return true;
@@ -218,7 +218,7 @@ class subject extends Model
      */
     public function info($id)
     {
-        $model = \logic\Article\model\article::findFirstById($id);
+        $model = \logic\Article\model\subject::findFirstById($id);
         if ($model === false) {
             return '_empty-info';
         }

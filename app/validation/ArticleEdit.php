@@ -2,7 +2,7 @@
 
 namespace app\validation;
 
-use app\model\article;
+use app\model\subject;
 use pms\Validation;
 
 /**
