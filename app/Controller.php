@@ -25,7 +25,6 @@ class Controller extends \pms\Controller
     public function initialize()
     {
         $this->user_id = $this->session->user_id;
-
         $this->message->pruge();
         parent::initialize();
     }
