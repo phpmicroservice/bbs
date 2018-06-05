@@ -12,7 +12,6 @@ use app\validation\ForumsDel;
 class Forums extends Base
 {
 
-
     /**
      * 转换分类的name 为分类的id
      * @param $name
@@ -26,6 +25,19 @@ class Forums extends Base
         }
         return (int)$model->id;
 
+    }
+
+    /**
+     * 验证是否存在
+     * @param $id
+     */
+    public function va_ex($id)
+    {
+        $model = forum::findFirstByid($id);
+        if (empty($model)) {
+            return false;
+        }
+        return true;
     }
 
     /**

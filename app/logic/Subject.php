@@ -11,12 +11,6 @@ class Subject extends Base
 {
 
 
-    public static function ids2list($id_list)
-    {
-        $list = service\Article::ids2list($id_list);
-        return \tool\Arr::array_change_index($list->toArray(), 'id');
-    }
-
     /**
      * 下一篇
      * @return string
@@ -69,6 +63,15 @@ class Subject extends Base
         } else {
             return true;
         }
+    }
+
+    public function va_ex($id)
+    {
+        $model = \app\model\Subject::findFirstById($id);
+        if (empty($model)) {
+            return [];
+        }
+        return $model;
     }
 
     /**
@@ -258,7 +261,7 @@ class Subject extends Base
             $tm233->rollback();
             return false;
         }
-       $re251 = $tm233->commit();
+        $re251 = $tm233->commit();
         output($re251);
         return true;
     }
