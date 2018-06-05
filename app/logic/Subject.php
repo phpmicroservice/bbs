@@ -65,6 +65,11 @@ class Subject extends Base
         }
     }
 
+    /**
+     * 验证是否存在
+     * @param $id
+     * @return array
+     */
     public function va_ex($id)
     {
         $model = \app\model\Subject::findFirstById($id);
