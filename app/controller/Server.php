@@ -3,9 +3,8 @@
 namespace app\controller;
 
 
-class Server extends Controller
+class Server extends \app\Controller
 {
-
 
     /**
      * 验证论坛版块是否存在
