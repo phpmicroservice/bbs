@@ -18,7 +18,13 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/phpmicroservice/funch/zipball/e8754c14a62a8258517ad4675a47dbe979e8ac0b",
                 "reference": "e8754c14a62a8258517ad4675a47dbe979e8ac0b",
-                "shasum": ""
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
             },
             "require": {
                 "php": ">7"
@@ -52,17 +58,23 @@
         },
         {
             "name": "phpmicroservice/pms-frame",
-            "version": "0.2.30",
+            "version": "0.2.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpmicroservice/pms.git",
-                "reference": "6ff4cb1401e2dd42f4260bc742e189e8020f5c35"
+                "reference": "8679a24add6c7d88bc3391b9fb79c0a634bd55bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpmicroservice/pms/zipball/6ff4cb1401e2dd42f4260bc742e189e8020f5c35",
-                "reference": "6ff4cb1401e2dd42f4260bc742e189e8020f5c35",
-                "shasum": ""
+                "url": "https://api.github.com/repos/phpmicroservice/pms/zipball/8679a24add6c7d88bc3391b9fb79c0a634bd55bb",
+                "reference": "8679a24add6c7d88bc3391b9fb79c0a634bd55bb",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
             },
             "require": {
                 "ext-phalcon": "3.1.*",
@@ -103,7 +115,7 @@
                 "tcp",
                 "websockect"
             ],
-            "time": "2018-06-27T10:10:51+00:00"
+            "time": "2018-08-05T03:17:17+00:00"
         }
     ],
     "packages-dev": [],
