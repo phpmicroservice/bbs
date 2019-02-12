@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9a6c7523cae00d78fc048faef5d4f2e3",
+    "content-hash": "4141a5c8a4317fa4d8de7b066ef9f47d",
     "packages": [
         {
             "name": "phpmicroservice/funch",
@@ -58,16 +58,16 @@
         },
         {
             "name": "phpmicroservice/pms-frame",
-            "version": "0.3.3",
+            "version": "0.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpmicroservice/pms.git",
-                "reference": "aafa66b33663ee539d99ef43afdd29d54547c97a"
+                "reference": "ef86cfb6a6f73e34080656e8400bd8679568789a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpmicroservice/pms/zipball/aafa66b33663ee539d99ef43afdd29d54547c97a",
-                "reference": "aafa66b33663ee539d99ef43afdd29d54547c97a",
+                "url": "https://api.github.com/repos/phpmicroservice/pms/zipball/ef86cfb6a6f73e34080656e8400bd8679568789a",
+                "reference": "ef86cfb6a6f73e34080656e8400bd8679568789a",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -91,10 +91,7 @@
             "autoload": {
                 "psr-4": {
                     "pms\\": "src/"
-                },
-                "files": [
-                    "src/index.php"
-                ]
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -117,7 +114,7 @@
                 "tcp",
                 "websockect"
             ],
-            "time": "2019-02-08T10:00:27+00:00"
+            "time": "2019-02-12T12:23:24+00:00"
         }
     ],
     "packages-dev": [],

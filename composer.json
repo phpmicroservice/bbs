@@ -1,5 +1,5 @@
 {
   "require": {
-    "phpmicroservice/pms-frame": "0.3.*"
+    "phpmicroservice/pms-frame": "~0.3.1"
   }
 }
