@@ -64,7 +64,7 @@ $di->setShared('gCache', function () use ($di) {
             "lifetime" => 172800,
         ]
     );
-    output($di['config']->cache, 'gCache');
+    \pms\output($di['config']->cache, 'gCache');
     $op = [
         "host" => getenv('GCACHE_HOST'),
         "port" => getenv('GCACHE_PORT'),
@@ -91,13 +91,13 @@ $di->setShared('sessionCache', function () use ($di) {
             "lifetime" => 172800,
         ]
     );
-    output($di['config']->cache, 'gCache');
+    \pms\output($di['config']->cache, 'gCache');
     $op = [
         "host" => getenv('SESSION_CACHE_HOST'),
-        "port" => get_env('SESSION_CACHE_PORT', 6379),
-        "auth" => get_env('SESSION_CACHE_AUTH', ''),
-        "persistent" => get_env('SESSION_CACHE_PERSISTENT', 1),
-        'prefix' => get_env('SESSION_CACHE_PREFIX', 'session_'),
+        "port" => \pms\get_env('SESSION_CACHE_PORT', 6379),
+        "auth" => \pms\get_env('SESSION_CACHE_AUTH', ''),
+        "persistent" => \pms\get_env('SESSION_CACHE_PERSISTENT', 1),
+        'prefix' => \pms\get_env('SESSION_CACHE_PREFIX', 'session_'),
         "index" => getenv('SESSION_CACHE_INDEX')
     ];
     if (empty($op['auth'])) {
@@ -146,8 +146,8 @@ $di->set(
 
 $di->set(
     "proxyCS", function () {
-        output('proxyCS','proxyCS');
-    $client = new \pms\bear\ClientSync(get_env('PROXY_HOST'), get_env('PROXY_PROT'), 10);
+        \pms\output('proxyCS','proxyCS');
+    $client = new \pms\bear\ClientSync(\pms\get_env('PROXY_HOST'), \pms\get_env('PROXY_PROT'), 10);
     return $client;
 
 });
