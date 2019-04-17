@@ -5,7 +5,7 @@ define("SERVICE_NAME", "bbs");# 设置服务名字
 define('ROOT_DIR', dirname(__DIR__));
 require ROOT_DIR . '/vendor/autoload.php';
 # 进行一些项目配置
-define('APP_SECRET_KEY', get_env("APP_SECRET_KEY"));
+define('APP_SECRET_KEY', \pms\get_env("APP_SECRET_KEY"));
 
 $re9 = env_exist([
     'GCACHE_HOST', 'GCACHE_PORT', 'GCACHE_AUTH', 'GCACHE_PERSISTENT', 'GCACHE_PREFIX', 'GCACHE_INDEX',
@@ -25,7 +25,7 @@ $loader->registerNamespaces(
 );
 $loader->register();
 
-$server = new \pms\Server('0.0.0.0', 9502, SWOOLE_BASE, SWOOLE_SOCK_TCP, [
+$server = new \pms\TcpServer('0.0.0.0', 9502, SWOOLE_BASE, SWOOLE_SOCK_TCP, [
     'daemonize' => false,
     'reload_async' => false,
     'reactor_num_mulriple' => 1,

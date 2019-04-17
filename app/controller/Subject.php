@@ -35,7 +35,7 @@ class Subject extends Controller
         $data = $this->getData();
         $server = new \app\logic\Subject();
         $re = $server->add($this->user_id, $data);
-        output($re,'send');
+        \pms\output($re,'send');
         $this->send($re);
     }
 

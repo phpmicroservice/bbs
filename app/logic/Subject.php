@@ -267,7 +267,7 @@ class Subject extends Base
             return false;
         }
         $re251 = $tm233->commit();
-        output($re251);
+        \pms\output($re251);
         return true;
     }
 

@@ -29,7 +29,7 @@ class Guidance extends \Phalcon\Di\Injectable
      */
     public function beforeStart(Event $event, \pms\Server $pms_server, \Swoole\Server $server)
     {
-        output('beforeStart  beforeStart', 'beforeStart');
+        \pms\output('beforeStart  beforeStart', 'beforeStart');
         # 写入依赖注入
 
     }
@@ -42,7 +42,7 @@ class Guidance extends \Phalcon\Di\Injectable
      */
     public function onWorkerStart(Event $event, \pms\Server $pms_server, \Swoole\Server $server)
     {
-        output($server->taskworker, 'guidance');
+        \pms\output($server->taskworker, 'guidance');
         # 绑定一个权限验证
         $this->eventsManager->attach('Router:handleCall', $this);
         # 绑定一个准备判断和准备成功
@@ -59,7 +59,7 @@ class Guidance extends \Phalcon\Di\Injectable
     public function readyJudge(Event $event, \pms\Server $pms_server, $timeid)
     {
         $this->dConfig->ready = true;
-        output('初始化完成', 'init');
+        \pms\output('初始化完成', 'init');
     }
 
     /**
